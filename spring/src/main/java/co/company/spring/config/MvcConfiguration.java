@@ -4,6 +4,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -20,6 +21,7 @@ import co.company.spring.common.AuthCheckInterceptor;
 import co.company.spring.controller.Greeter;
 
 @EnableWebMvc //(annotation-driven)
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 @ComponentScan(basePackages="co.company")
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer {

@@ -15,20 +15,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.company.spring.dao.Emp;
-import co.company.spring.dao.EmpMapper;
 import co.company.spring.dao.EmpSearch;
 import co.company.spring.dao.Jobs;
 import co.company.spring.dao.departments;
+import co.company.spring.emp.service.EmpService;
 
 @Controller
 public class EmpController {
 	@Autowired
-	EmpMapper dao; //DAO
+	EmpService service;
+	//EmpMapper dao; //DAO
 	
 	@RequestMapping("/ajax/jobSelect")
 	@ResponseBody
 	public List<Jobs> jobSelect() {
-		return dao.jobSelect();
+		return service.jobSelect();
 	}
 			
 	
@@ -38,7 +39,7 @@ public class EmpController {
 	public ModelAndView select(EmpSearch emp) {
 		//DB에서 전체사원조회
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("list", dao.getEmpList(emp));
+		mav.addObject("list", service.getEmpList(emp));
 		mav.setViewName("emp/select");
 		
 		return mav;
@@ -46,7 +47,7 @@ public class EmpController {
 	
 	@GetMapping("/empUpdateForm")
 	public String updateForm(Model model, Emp emp) {
-		model.addAttribute("emp", dao.getEmp(emp));
+		model.addAttribute("emp", service.getEmp(emp));
 		/*
 		 * model.addAttribute("jobs", dao.jobSelect());
 		 * model.addAttribute("departments", dao.departmentSelect());
@@ -57,11 +58,11 @@ public class EmpController {
 	
 	@ModelAttribute("jobs")
 	public List<Jobs> jobs(){
-		return dao.jobSelect();
+		return service.jobSelect();
 	}
 	@ModelAttribute("departments")
 	public List<departments> departments(){
-		return dao.departmentSelect();
+		return service.departmentSelect();
 	}
 	
 	@GetMapping("/empinsertForm")
@@ -82,9 +83,9 @@ public class EmpController {
 			return "emp/insert";
 		}
 			if(emp.getEmployeeId() == null)
-				dao.insertEmp(emp);
+				service.insertEmp(emp);
 			else
-				dao.updateEmp(emp);
+				service.updateEmp(emp);
 			//request.setAttribute("emp", emp);
 			return "emp/insertOutput";
 	}

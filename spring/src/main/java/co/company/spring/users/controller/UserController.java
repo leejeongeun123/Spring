@@ -29,6 +29,8 @@ public class UserController {
 	@Autowired
 	UserService service;
 	
+
+	
 	//등록페이지로 이동
 	@GetMapping("/userInsert")
 	public String userInsertForm() {
